@@ -20,8 +20,10 @@ h2 {
 p {
     color: ghostwhite;
     font-family: 'Press Start 2P', arial;
+    background-color: rgba(20, 19, 20, 0.6);
+    line-height: 25px;
     display: inline-block;
-    /* float: left; */
+    text-align: left;
 }
 
 #main {
@@ -45,15 +47,15 @@ p {
 }
 
 #robot1, #robot2 {
-    width: 90px;
+    width: 80px;
 }
 
 #robot1 img {
-    width: 90px;
+    width: 80px;
 }
 
 #robot2 img {
-    width: 90px;
+    width: 80px;
 }
 
 #main-robot {
@@ -70,6 +72,7 @@ p {
     color: ghostwhite;
     background-color: #47619B;
     box-shadow: 2px 2px 2px rgb(155, 28, 95);
+    padding: 8px;
     cursor: pointer;
 }
 
@@ -80,7 +83,7 @@ p {
     display: flex;
     justify-content: space-around;
     position: absolute;
-    margin-left: -400px;
+    /* margin-left: -400px; */
 }
 
 .main-robot-container {

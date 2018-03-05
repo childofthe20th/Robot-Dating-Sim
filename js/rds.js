@@ -1,21 +1,13 @@
 
 
 
+
+
+
+
+
+
 $(()=>{
-
-
-
-
-
-
-
-
-    // const createPlayer = ()=>{
-    //     const player1 = $("<img src='images/robots/robot1.png' alt=''>")
-    //     $("#robot1").append(player1);
-    // }
-    //
-    // createPlayer();
 
 
     const robots = [];
@@ -42,21 +34,79 @@ $(()=>{
     robots.push($rob9);
     robots.push($rob10);
 
+
+
+    let sanguine = "SANGUINE";
+    let choleric = "CHOLERIC";
+    let meloncholic = "MELONCHOLIC";
+    let phlegmatic = "PHLEGMATIC";
+
+    const types = [sanguine, choleric, meloncholic, phlegmatic];
+
+    const typeRandom = ()=>{
+        let randomType = types[Math.floor(Math.random()*types.length)];
+        return randomType;
+    }
+
+    // console.log(typeRandom());
+
     const createPlayer1 = ()=>{
-        let player1 = robots[Math.floor(Math.random()*robots.length)];
-        $("#robot1").append(player1);
+        let $player1 = robots[Math.floor(Math.random()*robots.length)];
+        $("#robot1").append($player1);
     }
 
     const createPlayer2 = ()=>{
-        let player2 = robots[Math.floor(Math.random()*robots.length)];
-        $("#robot2").append(player2);
+        let $player2 = robots[Math.floor(Math.random()*robots.length)];
+        $("#robot2").append($player2);
     }
+
+
+
+    const $nextButton = $('.button');
+    $nextButton.on('click', ()=>{
+        $('.text').text('Type: ').append($nextButton);
+        $nextButton.text(typeRandom);
+        if ($nextButton.text() === "SANGUINE") {
+            $nextButton.on('click', sanguineGame);
+        }
+        if ($nextButton.text() === "CHOLERIC") {
+            $nextButton.on('click', cholericGame);
+        }
+        if ($nextButton.text() === "MELONCHOLIC") {
+            $nextButton.on('click', meloncholicGame);
+        }
+        if ($nextButton.text() === "PHLEGMATIC") {
+            $nextButton.on('click', phlegmaticGame);
+        }
+    });
+
+    const nums = [00, 14, 29, 3, 404, 15, 6, 67, 81, 90];
+
+    const randomName = ()=>{
+        let name = ("MX-" + nums[Math.floor(Math.random()*nums.length)] + nums[Math.floor(Math.random()*nums.length)]);
+        return name;
+    }
+
+    const sanguineGame = ()=>{
+        $('.text').text("Good evening... potential mate, BZZT. I am " + randomName() + ". I would like to assess our compatability... BEEP");
+        
+    }
+
+    const cholericGame = ()=>{
+        $('.text').text("Good evening... potential mate, BZZT. I am " + randomName() + ". I would like to assess our compatability... BEEP");
+    }
+
+    const meloncholicGame = ()=>{
+        $('.text').text("Good evening... potential mate, BZZT. I am " + randomName() + ". I would like to assess our compatability... BEEP");
+    }
+
+    const phlegmaticGame = ()=>{
+        $('.text').text("Good evening... potential mate, BZZT. I am " + randomName() + ". I would like to assess our compatability... BEEP");
+    }
+
+
 
     createPlayer1();
     // createPlayer2();
 
-
-
-
-
-})
+});
