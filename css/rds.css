@@ -21,7 +21,7 @@ p {
     color: ghostwhite;
     font-family: 'Press Start 2P', arial;
     display: inline-block;
-    float: left;
+    /* float: left; */
 }
 
 #main {
@@ -41,9 +41,10 @@ p {
     background-color: rgba(20, 19, 20, 0.8);
     border: 3px solid rgb(155, 28, 95);
     border-radius: 5px;
+    margin-top: 510px;
 }
 
-#robot1, #robot2, #robot3 {
+#robot1, #robot2 {
     width: 90px;
 }
 
@@ -55,19 +56,39 @@ p {
     width: 90px;
 }
 
-#robot3 img {
-    width: 90px;
+#main-robot {
+    width: 80px;
+}
+
+#main-robot img {
+    width: 80px;
+}
+
+.button {
+    border-radius: 3px;
+    font-family: 'Press Start 2P', arial;
+    color: ghostwhite;
+    background-color: #47619B;
+    box-shadow: 2px 2px 2px rgb(155, 28, 95);
+    cursor: pointer;
 }
 
 .robot-container {
-    width: 60%;
+    width: 40%;
     height: 180px;
     bottom: 0;
     display: flex;
     justify-content: space-around;
     position: absolute;
-    margin: auto;
-    justify-content: space-around;
+    margin-left: -400px;
+}
+
+.main-robot-container {
+    width: 90px;
+    height: 200px;
+    bottom: 0;
+    position: absolute;
+    display: inline-block;
 }
 
 .heart-container {
