@@ -38,7 +38,7 @@ $(()=>{
 
     let sanguine = "SANGUINE";
     let choleric = "CHOLERIC";
-    let meloncholic = "MELONCHOLIC";
+    let meloncholic = "MELANCHOLIC";
     let phlegmatic = "PHLEGMATIC";
 
     const types = [sanguine, choleric, meloncholic, phlegmatic];
@@ -72,8 +72,8 @@ $(()=>{
         if ($nextButton.text() === "CHOLERIC") {
             $nextButton.on('click', cholericGame);
         }
-        if ($nextButton.text() === "MELONCHOLIC") {
-            $nextButton.on('click', meloncholicGame);
+        if ($nextButton.text() === "MELANCHOLIC") {
+            $nextButton.on('click', melancholicGame);
         }
         if ($nextButton.text() === "PHLEGMATIC") {
             $nextButton.on('click', phlegmaticGame);
@@ -88,20 +88,21 @@ $(()=>{
     }
 
     const sanguineGame = ()=>{
-        $('.text').text("Good evening... potential mate, BZZT. I am " + randomName() + ". I would like to assess our compatability... BEEP");
+        $('.text').text("Good evening... potential mate, BZZT. I am " + randomName() + ". I would like to assess our compatability... BEEP...");
         
+
     }
 
     const cholericGame = ()=>{
-        $('.text').text("Good evening... potential mate, BZZT. I am " + randomName() + ". I would like to assess our compatability... BEEP");
+        $('.text').text("Good evening... potential mate, BZZT. I am " + randomName() + ". I would like to assess our compatability... BEEP...");
     }
 
-    const meloncholicGame = ()=>{
-        $('.text').text("Good evening... potential mate, BZZT. I am " + randomName() + ". I would like to assess our compatability... BEEP");
+    const melancholicGame = ()=>{
+        $('.text').text("Good evening... potential mate, BZZT. I am " + randomName() + ". I would like to assess our compatability... BEEP...");
     }
 
     const phlegmaticGame = ()=>{
-        $('.text').text("Good evening... potential mate, BZZT. I am " + randomName() + ". I would like to assess our compatability... BEEP");
+        $('.text').text("Good evening... potential mate, BZZT. I am " + randomName() + ". I would like to assess our compatability... BEEP...");
     }
 
 

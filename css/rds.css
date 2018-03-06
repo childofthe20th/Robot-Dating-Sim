@@ -24,6 +24,7 @@ p {
     line-height: 25px;
     display: inline-block;
     text-align: left;
+    margin-top: 0;
 }
 
 #main {
@@ -43,7 +44,8 @@ p {
     background-color: rgba(20, 19, 20, 0.8);
     border: 3px solid rgb(155, 28, 95);
     border-radius: 5px;
-    margin-top: 510px;
+    display: flex;
+    flex-direction: column;
 }
 
 #robot1, #robot2 {
@@ -76,22 +78,24 @@ p {
     cursor: pointer;
 }
 
+.main-robot-container {
+    width: 90px;
+    height: 200px;
+    right: 20%;
+    bottom: 0;
+    position: absolute;
+    display: inline-block;
+    text-align: right;
+}
+
 .robot-container {
     width: 40%;
     height: 180px;
+    left: 20%;
     bottom: 0;
     display: flex;
     justify-content: space-around;
     position: absolute;
-    /* margin-left: -400px; */
-}
-
-.main-robot-container {
-    width: 90px;
-    height: 200px;
-    bottom: 0;
-    position: absolute;
-    display: inline-block;
 }
 
 .heart-container {
@@ -114,11 +118,14 @@ p {
 }
 
 .choice {
+    margin-right: 10px;
     border-radius: 3px;
-    margin: 10px 0 10px 10px;
     width: 40px;
     height: 40px;
+    font-size: 1.5em;
     background-color: #47619B;
     box-shadow: 2px 2px 2px rgb(155, 28, 95);
+    color: ghostwhite;
+    font-family: 'Press Start 2P', arial;
     cursor: pointer;
 }
