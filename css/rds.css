@@ -1,5 +1,6 @@
 * {
-    border: 1px solid rgba(0, 0, 0, 0.0);
+    /* border: 1px solid rgba(0, 0, 0, 0.0); */
+    border: 1px solid red;
 }
 
 body {
@@ -43,12 +44,12 @@ p {
 }
 
 #bottom-main {
-    width: 110%;
-    height: 250px;
+    width: 120%;
+    height: 230px;
     background-color: rgba(20, 19, 20, 0.8);
     border: 3px solid rgb(155, 28, 95);
     border-radius: 5px;
-    margin-left: -5%;
+    margin-left: -10%;
     display: flex;
     flex-direction: column;
     overflow: auto;
@@ -80,7 +81,7 @@ p {
     font-family: 'Press Start 2P', arial;
     color: ghostwhite;
     background-color: #47619B;
-    box-shadow: 2px 2px 2px rgb(155, 28, 95);
+    box-shadow: 0 5px 2px rgb(155, 28, 95);
     padding: 6px;
     cursor: pointer;
 }
@@ -106,7 +107,14 @@ p {
 }
 
 .heart-container {
-    width: 300px;
+    width: 260px;
+    height: 50px;
+    display: inline-block;
+    float: right;
+}
+
+.heart-container2 {
+    width: 260px;
     height: 50px;
     display: inline-block;
     float: right;
@@ -119,14 +127,21 @@ p {
     float: right;
 }
 
+.heart-container2 img {
+    height: 40px;
+    width: 40px;
+    display: inline-block;
+    float: right;
+}
+
 .first.choice, .second.choice, .third.choice {
-    margin: 10px 10px 0 10px;
+    margin: 5px 5px 0 5px;
     border-radius: 3px;
     width: 40px;
     height: 40px;
     font-size: 1.5em;
     background-color: #47619B;
-    box-shadow: 2px 2px 2px rgb(155, 28, 95);
+    box-shadow: 0 5px 5px rgb(155, 28, 95);
     color: ghostwhite;
     font-family: 'Press Start 2P', arial;
     cursor: pointer;

@@ -4,6 +4,48 @@
 $(()=>{
 
 
+    const $heartContainer = $('.heart-container');
+
+    const heartPushP1 = ()=>{
+        $heartContainer.append($("<img src='images/hearts/vectorstock_15134146.png'>").addClass("heart"));
+        if ($('.heart').eq(4).length) {
+            console.log('you win');
+            console.log($heartContainer.children());
+        }
+    }
+
+    const heartPopP1 = ()=>{
+        $('.heart').eq(0).remove();
+        if ($heartContainer.is(":empty")) {
+            console.log('you lose');
+        }
+    }
+
+    const $heartContainer2 = $('.heart-container2');
+
+    const heartPushP2 = ()=>{
+        $heartContainer2.append($("<img src='images/hearts/vectorstock_15134146.png'>").addClass("heart2"));
+        if ($('.heart2').eq(4).length) {
+            console.log('you win');
+            console.log($heartContainer2.children());
+        }
+    }
+
+    const heartPopP2 = ()=>{
+        $('.heart2').eq(0).remove();
+        if ($heartContainer2.is(":empty")) {
+            console.log('you lose');
+        }
+    }
+
+
+
+    // heartPushP1()
+
+
+    //////////////////////////////////////////////////////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////////////////////////////////////////////////////
+
     const robots = [];
 
     const $rob1 = $("<img src='images/robots/robot1.png' alt=''>");
@@ -51,7 +93,7 @@ $(()=>{
         if ($("#robot1").is(":empty")) {
             $("#robot1").append($player1);
         } else {return};
-        // $("#interest2").hide();
+        heartPushP1();
     };
 
     const createPlayer2 = ()=>{
@@ -59,8 +101,7 @@ $(()=>{
         if ($("#robot2").is(":empty")) {
             $("#robot2").append($player2);
         } else {return};
-
-        // $("#interest2").show();
+        heartPushP2();
     };
 
     //////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -103,50 +144,6 @@ $(()=>{
     //////////////////////////////////////////////////////////////////////////////////////////////////////
     //////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    // const interestP1 = ()=>{
-    //     return interest1.value += 1;
-    //     if (interest1.value === 5) {
-    //         console.log("Player1 wins!");
-    //     }
-    // }
-    //
-    // const interestP2 = ()=>{
-    //     return interest2.value += 1;
-    //     if (interest2.value === 5) {
-    //         console.log("Player2 wins!");
-    //     }
-    // }
-    //
-    // const disinterestP1 = ()=>{
-    //     return interest1.value -= 1;
-    //     if (interest1.value === 0) {
-    //         console.log("Player1 loses!");
-    //     }
-    // }
-    //
-    // const disinterestP1Worse = ()=>{
-    //     return interest1.value -= 2;
-    //     if (interest1.value === 0) {
-    //         console.log("Player1 loses!");
-    //     }
-    // }
-    //
-    // const disinterestP2 = ()=>{
-    //     return interest2.value -= 1;
-    //     if (interest2.value === 0) {
-    //         console.log("Player2 loses!");
-    //     }
-    // }
-    //
-    // const disinterestP2Worse = ()=>{
-    //     return interest2.value -= 2;
-    //     if (interest2.value === 0) {
-    //         console.log("Player2 loses!");
-    //     }
-    // }
-
-    //////////////////////////////////////////////////////////////////////////////////////////////////////
-    //////////////////////////////////////////////////////////////////////////////////////////////////////
 
     const $dialogue = $('.text');
 
@@ -181,21 +178,24 @@ $(()=>{
         $dialogue.text("Good evening... potential mate, BZZT. I am " + randomName() + ". I would like to assess our compatability... BEEP. Player one turn...");
         $letterA.append("<p>Do you like to read?</p>").on('click', ()=>{
             $malfunction();
+            heartPopP1();
             setTimeout(()=>{
                 sanguineGame2P()
-            }, 2500)
+            }, 2000)
         });
         $letterB.append("<p>Why so glum? Smile more!</p>").on('click', ()=>{
             $malfunction();
+            heartPopP1();
             setTimeout(()=>{
                 sanguineGame2P()
-            }, 2500)
+            }, 2000)
         });
         $letterC.append("<p>Have you been to any... good shows lately?</p>").on('click', ()=>{
             $success();
+            heartPushP1();
             setTimeout(()=>{
                 sanguineGame2P()
-            }, 2500)
+            }, 2000)
         });
     };
 
@@ -204,21 +204,24 @@ $(()=>{
         $dialogue.text("Player one turn...");
         $letterA.append("<p>Malfunction</p>").on('click', ()=>{
             $malfunction();
+            heartPopP1();
             setTimeout(()=>{
                 sanguineGame2PRound2()
-            }, 2500)
+            }, 2000)
         });
         $letterB.append("<p>Test</p>").on('click', ()=>{
             $success();
+            heartPushP1();
             setTimeout(()=>{
                 sanguineGame2PRound2();
-            }, 2500)
+            }, 2000)
         });
         $letterC.append("<p>Malfunction</p>").on('click', ()=>{
             $malfunction();
+            heartPopP1();
             setTimeout(()=>{
                 sanguineGame2PRound2();
-            }, 2500)
+            }, 2000)
         });
     };
 
@@ -227,21 +230,24 @@ $(()=>{
         $dialogue.text("Player one turn...");
         $letterA.append("<p>Malfunction</p>").on('click', ()=>{
             $malfunction();
+            heartPopP1();
             setTimeout(()=>{
                 sanguineGame2PRound3()
-            }, 2500)
+            }, 2000)
         });
         $letterB.append("<p>Malfunction</p>").on('click', ()=>{
             $malfunction();
+            heartPopP1();
             setTimeout(()=>{
                 sanguineGame2PRound3();
-            }, 2500)
+            }, 2000)
         });
         $letterC.append("<p>Test</p>").on('click', ()=>{
             $success();
+            heartPushP1();
             setTimeout(()=>{
                 sanguineGame2PRound3();
-            }, 2500)
+            }, 2000)
         });
     };
 
@@ -251,23 +257,23 @@ $(()=>{
         createPlayer2();
         $clearChoices();
         $dialogue.text("New challenger " + randomName2() + " has arrived! BLRRRP! Player two turn...");
-        $letterA.append("<p>I love to talk about myself... care to join me?</p>").on('click', ()=>{
+        $letterA.append("<p>I could us some peace and quiet, you?</p>").on('click', ()=>{
             $malfunction();
             setTimeout(()=>{
                 sanguineGameRound2();
-            }, 2500)
+            }, 2000)
         });
-        $letterB.append("<p>There is a place that serves the best motor oil in town... beep, care to join?</p>").on('click', ()=>{
+        $letterB.append("<p>Let's go on an adventure!</p>").on('click', ()=>{
             $success();
             setTimeout(()=>{
                 sanguineGameRound2();
-            }, 2500)
+            }, 2000)
         });
-        $letterC.append("<p>I cannot stand the quantity of lifeforms around... let's get out of here.</p>").on('click', ()=>{
+        $letterC.append("<p>I would rather be in my charging pod tonight.</p>").on('click', ()=>{
             $malfunction();
             setTimeout(()=>{
                 sanguineGameRound2();
-            }, 2500)
+            }, 2000)
         });
 
     };
@@ -279,19 +285,19 @@ $(()=>{
             $success();
             setTimeout(()=>{
                 sanguineGameRound3()
-            }, 2500)
+            }, 2000)
         });
         $letterB.append("<p>Malfunction</p>").on('click', ()=>{
             $malfunction();
             setTimeout(()=>{
                 sanguineGameRound3();
-            }, 2500)
+            }, 2000)
         });
         $letterC.append("<p>Malfunction</p>").on('click', ()=>{
             $malfunction();
             setTimeout(()=>{
                 sanguineGameRound3();
-            }, 2500)
+            }, 2000)
         });
     };
 
@@ -302,21 +308,21 @@ $(()=>{
             $malfunction();
             setTimeout(()=>{
                 // tally points
-            }, 2500)
+            }, 2000)
         });
         $letterB.append("<p>Malfunction</p>").on('click', ()=>{
             $malfunction();
             setTimeout(()=>{
                 // tally points
                 // end game
-            }, 2500)
+            }, 2000)
         });
         $letterC.append("<p>Test</p>").on('click', ()=>{
             $success();
             setTimeout(()=>{
                 // tally points
                 // end game
-            }, 2500)
+            }, 2000)
         });
     };
 
@@ -329,19 +335,19 @@ $(()=>{
             $malfunction();
             setTimeout(()=>{
                 cholericGame2P()
-            }, 2500)
+            }, 2000)
         });
         $letterB.append("<p>Test</p>").on('click', ()=>{
             $success();
             setTimeout(()=>{
                 cholericGame2P();
-            }, 2500)
+            }, 2000)
         });
         $letterC.append("<p>Malfunction</p>").on('click', ()=>{
             $malfunction();
             setTimeout(()=>{
                 cholericGame2P();
-            }, 2500)
+            }, 2000)
         });
     };
 
@@ -352,19 +358,19 @@ $(()=>{
             $malfunction();
             setTimeout(()=>{
                 cholericGame2PRound2()
-            }, 2500)
+            }, 2000)
         });
         $letterB.append("<p>Malfunction</p>").on('click', ()=>{
             $malfunction();
             setTimeout(()=>{
                 cholericGame2PRound2();
-            }, 2500)
+            }, 2000)
         });
         $letterC.append("<p>Test</p>").on('click', ()=>{
             $success();
             setTimeout(()=>{
                 cholericGame2PRound2();
-            }, 2500)
+            }, 2000)
         });
     }
 
@@ -375,19 +381,19 @@ $(()=>{
             $success();
             setTimeout(()=>{
                 cholericGame2PRound3()
-            }, 2500)
+            }, 2000)
         });
         $letterB.append("<p>Malfunction</p>").on('click', ()=>{
             $malfunction();
             setTimeout(()=>{
                 cholericGame2PRound3();
-            }, 2500)
+            }, 2000)
         });
         $letterC.append("<p>Malfunction</p>").on('click', ()=>{
             $malfunction();
             setTimeout(()=>{
                 cholericGame2PRound3();
-            }, 2500)
+            }, 2000)
         });
     }
 
@@ -401,19 +407,19 @@ $(()=>{
             $malfunction();
             setTimeout(()=>{
                 cholericGameRound2()
-            }, 2500)
+            }, 2000)
         });
         $letterB.append("<p>Test</p>").on('click', ()=>{
             $success();
             setTimeout(()=>{
                 cholericGameRound2();
-            }, 2500)
+            }, 2000)
         });
         $letterC.append("<p>Malfunction</p>").on('click', ()=>{
             $malfunction();
             setTimeout(()=>{
                 cholericGameRound2();
-            }, 2500)
+            }, 2000)
         });
     }
 
@@ -424,19 +430,19 @@ $(()=>{
             $success();
             setTimeout(()=>{
                 cholericGameRound3()
-            }, 2500)
+            }, 2000)
         });
         $letterB.append("<p>Malfunction</p>").on('click', ()=>{
             $malfunction();
             setTimeout(()=>{
                 cholericGameRound3();
-            }, 2500)
+            }, 2000)
         });
         $letterC.append("<p>Malfunction</p>").on('click', ()=>{
             $malfunction();
             setTimeout(()=>{
                 cholericGameRound3();
-            }, 2500)
+            }, 2000)
         });
     }
 
@@ -448,21 +454,21 @@ $(()=>{
             setTimeout(()=>{
                 // tally points
                 // end game
-            }, 2500)
+            }, 2000)
         });
         $letterB.append("<p>Malfunction</p>").on('click', ()=>{
             $malfunction();
             setTimeout(()=>{
                 // tally points
                 // end game
-            }, 2500)
+            }, 2000)
         });
         $letterC.append("<p>Test</p>").on('click', ()=>{
             $success();
             setTimeout(()=>{
                 // tally points
                 // end game
-            }, 2500)
+            }, 2000)
         });
     }
 
@@ -475,19 +481,19 @@ $(()=>{
             $malfunction();
             setTimeout(()=>{
                 melancholicGame2P()
-            }, 2500)
+            }, 2000)
         });
         $letterB.append("<p>Test</p>").on('click', ()=>{
             $success();
             setTimeout(()=>{
                 melancholicGame2P();
-            }, 2500)
+            }, 2000)
         });
         $letterC.append("<p>Malfunction</p>").on('click', ()=>{
             $malfunction();
             setTimeout(()=>{
                 melancholicGame2P();
-            }, 2500)
+            }, 2000)
         });
     };
 
@@ -498,19 +504,19 @@ $(()=>{
             $malfunction();
             setTimeout(()=>{
                 melancholicGame2PRound2()
-            }, 2500)
+            }, 2000)
         });
         $letterB.append("<p>Malfunction</p>").on('click', ()=>{
             $malfunction();
             setTimeout(()=>{
                 melancholicGame2PRound2();
-            }, 2500)
+            }, 2000)
         });
         $letterC.append("<p>Test</p>").on('click', ()=>{
             $success();
             setTimeout(()=>{
                 melancholicGame2PRound2();
-            }, 2500)
+            }, 2000)
         });
     }
 
@@ -521,19 +527,19 @@ $(()=>{
             $malfunction();
             setTimeout(()=>{
                 melancholicGame2PRound3()
-            }, 2500)
+            }, 2000)
         });
         $letterB.append("<p>Malfunction</p>").on('click', ()=>{
             $malfunction();
             setTimeout(()=>{
                 melancholicGame2PRound3();
-            }, 2500)
+            }, 2000)
         });
         $letterC.append("<p>Test</p>").on('click', ()=>{
             $success();
             setTimeout(()=>{
                 melancholicGame2PRound3();
-            }, 2500)
+            }, 2000)
         });
     }
 
@@ -547,19 +553,19 @@ $(()=>{
             $malfunction();
             setTimeout(()=>{
                 melancholicGameRound2()
-            }, 2500)
+            }, 2000)
         });
         $letterB.append("<p>Test</p>").on('click', ()=>{
             $success();
             setTimeout(()=>{
                 melancholicGameRound2();
-            }, 2500)
+            }, 2000)
         });
         $letterC.append("<p>Malfunction</p>").on('click', ()=>{
             $malfunction();
             setTimeout(()=>{
                 melancholicGameRound2();
-            }, 2500)
+            }, 2000)
         });
     }
 
@@ -570,19 +576,19 @@ $(()=>{
             $success();
             setTimeout(()=>{
                 melancholicGameRound3()
-            }, 2500)
+            }, 2000)
         });
         $letterB.append("<p>Malfunction</p>").on('click', ()=>{
             $malfunction();
             setTimeout(()=>{
                 melancholicGameRound3();
-            }, 2500)
+            }, 2000)
         });
         $letterC.append("<p>Malfunction</p>").on('click', ()=>{
             $malfunction();
             setTimeout(()=>{
                 melancholicGameRound3();
-            }, 2500)
+            }, 2000)
         });
     }
 
@@ -594,21 +600,21 @@ $(()=>{
             setTimeout(()=>{
                 // tally points
                 // end game
-            }, 2500)
+            }, 2000)
         });
         $letterB.append("<p>Test</p>").on('click', ()=>{
             $success();
             setTimeout(()=>{
                 // tally points
                 // end game
-            }, 2500)
+            }, 2000)
         });
         $letterC.append("<p>Malfunction</p>").on('click', ()=>{
             $malfunction();
             setTimeout(()=>{
                 // tally points
                 // end game
-            }, 2500)
+            }, 2000)
         });
     }
 
@@ -621,19 +627,19 @@ $(()=>{
             $success();
             setTimeout(()=>{
                 phlegmaticGame2P()
-            }, 2500)
+            }, 2000)
         });
         $letterB.append("<p>Malfunction</p>").on('click', ()=>{
             $malfunction();
             setTimeout(()=>{
                 phlegmaticGame2P();
-            }, 2500)
+            }, 2000)
         });
         $letterC.append("<p>Malfunction</p>").on('click', ()=>{
             $malfunction();
             setTimeout(()=>{
                 phlegmaticGame2P();
-            }, 2500)
+            }, 2000)
         });
     };
 
@@ -644,19 +650,19 @@ $(()=>{
             $malfunction();
             setTimeout(()=>{
                 phlegmaticGame2PRound2();
-            }, 2500)
+            }, 2000)
         });
         $letterB.append("<p>Malfunction</p>").on('click', ()=>{
             $malfunction();
             setTimeout(()=>{
                 phlegmaticGame2PRound2();
-            }, 2500)
+            }, 2000)
         });
         $letterC.append("<p>Test</p>").on('click', ()=>{
             $success();
             setTimeout(()=>{
                 phlegmaticGame2PRound2();
-            }, 2500)
+            }, 2000)
         });
     }
 
@@ -667,19 +673,19 @@ $(()=>{
             $malfunction();
             setTimeout(()=>{
                 phlegmaticGame2PRound3()
-            }, 2500)
+            }, 2000)
         });
         $letterB.append("<p>Test</p>").on('click', ()=>{
             $success();
             setTimeout(()=>{
                 phlegmaticGame2PRound3();
-            }, 2500)
+            }, 2000)
         });
         $letterC.append("<p>Malfunction</p>").on('click', ()=>{
             $malfunction();
             setTimeout(()=>{
                 phlegmaticGame2PRound3();
-            }, 2500)
+            }, 2000)
         });
     }
 
@@ -693,19 +699,19 @@ $(()=>{
             $malfunction();
             setTimeout(()=>{
                 phlegmaticGameRound2();
-            }, 2500)
+            }, 2000)
         });
         $letterB.append("<p>Test</p>").on('click', ()=>{
             $success();
             setTimeout(()=>{
                 phlegmaticGameRound2();
-            }, 2500)
+            }, 2000)
         });
         $letterC.append("<p>Malfunction</p>").on('click', ()=>{
             $malfunction();
             setTimeout(()=>{
                 phlegmaticGameRound2();
-            }, 2500)
+            }, 2000)
         });
     }
 
@@ -716,19 +722,19 @@ $(()=>{
             $malfunction();
             setTimeout(()=>{
                 phlegmaticGameRound3();
-            }, 2500)
+            }, 2000)
         });
         $letterB.append("<p>Malfunction</p>").on('click', ()=>{
             $malfunction();
             setTimeout(()=>{
                 phlegmaticGameRound3();
-            }, 2500)
+            }, 2000)
         });
         $letterC.append("<p>Test</p>").on('click', ()=>{
             $success();
             setTimeout(()=>{
                 phlegmaticGameRound3();
-            }, 2500)
+            }, 2000)
         });
     }
 
@@ -740,21 +746,21 @@ $(()=>{
             setTimeout(()=>{
                 // tally points
                 // end game
-            }, 2500)
+            }, 2000)
         });
         $letterB.append("<p>Malfunction</p>").on('click', ()=>{
             $malfunction();
             setTimeout(()=>{
                 // tally points
                 // end game
-            }, 2500)
+            }, 2000)
         });
         $letterC.append("<p>Malfunction</p>").on('click', ()=>{
             $malfunction();
             setTimeout(()=>{
                 // tally points
                 // end game
-            }, 2500)
+            }, 2000)
         });
     }
 
@@ -763,6 +769,11 @@ $(()=>{
 
 
     createPlayer1();
+
+
     // createPlayer2();
+
+    // pointMaxP1();
+    // pointMaxP2();
 
 });
