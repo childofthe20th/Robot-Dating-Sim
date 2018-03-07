@@ -19,6 +19,14 @@ h2 {
     margin-left: 10px;
 }
 
+h4 {
+    display: flex;
+    flex-direction: row;
+    font-family: 'Press Start 2P', arial;
+    text-shadow: 0 5px 5px black;
+    margin-left: 10px;
+}
+
 p {
     color: ghostwhite;
     font-family: 'Press Start 2P', arial;
@@ -63,10 +71,21 @@ p {
 
 #robot1 img {
     width: 80px;
+    animation: fadein 2s;
 }
 
 #robot2 img {
     width: 80px;
+    animation: fadein 2s;
+}
+
+@keyframes fadein {
+    from {
+        opacity:0;
+    }
+    to {
+        opacity:1;
+    }
 }
 
 #main-robot {
@@ -75,6 +94,7 @@ p {
 
 #main-robot img {
     width: 80px;
+    animation: fadein 2s;
 }
 
 
@@ -114,11 +134,35 @@ p {
     position: absolute;
 }
 
+.borderBlink{
+    border: 2px dotted transparent;
+    border-radius: 3px;
+    -webkit-animation: borderBlink 0.5s step-end infinite;
+    animation: borderBlink 0.5s step-end infinite;
+}
+
+@keyframes borderBlink {
+    from, to {
+        border-color: transparent;
+    }
+    50% {
+        border-color: #3E5790;
+    }
+}
+
+@-webkit-keyframes borderBlink {
+    from, to {
+        border-color: transparent;
+    }
+    50% {
+        border-color: #3E5790;
+    }
+}
+
 .heart-container {
     width: 260px;
     height: 50px;
     display: inline-block;
-    float: right;
 }
 
 .heart-container2 {
