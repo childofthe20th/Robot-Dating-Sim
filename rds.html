@@ -2,7 +2,8 @@
 <html>
     <head>
         <meta charset="utf-8">
-        <title>Robot Dating Sim</title>
+        <title>Robo Dating v101.1</title>
+        <audio src="http://hcmaslov.d-real.sci-nnov.ru/public/mp3/Blade%20Runner/Blade%20Runner%20'Wait%20For%20Me'.mp3"autoplay></audio>
         <link href="https://fonts.googleapis.com/css?family=Press+Start+2P" rel="stylesheet">
         <link rel="stylesheet" href="css/rds.css">
         <script src="https://code.jquery.com/jquery-3.3.1.min.js" charset="utf-8"></script>
@@ -11,6 +12,7 @@
     <body>
         <div id="main">
             <div class="heart-container"></div>
+            <button id="modal-button">How To Play</button>
             <div class="heart-container2"></div>
 
             <h2>Robo Dating v101.1</h2>
@@ -25,16 +27,14 @@
             </div>
 
             <div class="main-robot-container">
-                <div id="main-robot">
-
-
-                </div>
+                <div id="main-robot"></div>
 
             </div>
 
 
         </div>
         <div id="bottom-main">
+            <div id="player-turn"></div>
 
             <p id="a"><button class="first choice">A</button></p>
             <p id="b"><button class="second choice">B</button></p>
@@ -42,8 +42,15 @@
 
         </div>
 
-
-
+        <div id="modal">
+            <div id="modal-textbox">
+                <h1>How to play</h1>
+                <p>This game is all about choices. The object of the game is to gain the affection of the target robot, but only if you are their type. Your scan will return their type in the form of the <a href="https://en.wikipedia.org/wiki/Four_temperaments">four temperaments</a> as proposed by the Greek physician Hippocrates (c. 460 – c. 370 BC).</p>
+                <p>Once the type is chosen... you, The Player, must choose dialogue that best matches that temperament to gain the favor of said love interest. You start the game off with two hearts and the correct dialogue will result in an extra heart to your heart container, and the wrong dialogue will lose you a heart.</p>
+                <p>This is a mandatory two player game, so you must take turns competing for the robot heart of the one in question. The first to end the dialogue tree with the most hearts (max of 5), wins the date! But be careful, the player that loses all their hearts forfeits the date to their opponent. Now go bone up on your four temperaments and have fun!</p>
+                <button id="close">CLOSE</button>
+            </div>
+        </div>
 
     </body>
 </html>

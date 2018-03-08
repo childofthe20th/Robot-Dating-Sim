@@ -27,7 +27,16 @@ h4 {
     margin-left: 10px;
 }
 
-p {
+a {
+    color: #3E5790;
+    text-decoration: none;
+}
+
+a:hover {
+    color: ghostwhite;
+}
+
+#main p {
     color: ghostwhite;
     font-family: 'Press Start 2P', arial;
     background-color: rgba(20, 19, 20, 0.6);
@@ -55,14 +64,93 @@ p {
 
 #bottom-main {
     width: 120%;
-    height: 230px;
+    height: 250px;
     background-color: rgba(20, 19, 20, 0.8);
     border: 3px solid rgb(155, 28, 95);
     border-radius: 5px;
     margin-left: -10%;
     display: flex;
     flex-direction: column;
-    overflow: auto;
+    /* overflow: auto; */
+    position: relative;
+    z-index: 0;
+}
+
+#bottom-main p {
+    color: ghostwhite;
+    font-family: 'Press Start 2P', arial;
+    background-color: rgba(20, 19, 20, 0.6);
+    text-shadow: 0 5px 5px black;
+    line-height: 25px;
+    display: inline-block;
+    text-align: left;
+    margin-top: 0;
+}
+
+#modal {
+    background-image: url(https://i.imgur.com/hSCWv4r.jpg);
+    background-position: bottom;
+	position: fixed;
+    top: 0;
+    left: 0;
+	height: 100%;
+	width: 100%;
+	z-index: 3;
+	overflow: auto;
+    color: ghostwhite;
+    font-family: 'Press Start 2P', arial;
+    text-shadow: 0 5px 5px black;
+    line-height: 40px;
+    text-align: center;
+    /* display: none; */
+}
+
+#modal-textbox {
+	height: 80%;
+	width: 80%;
+    margin: 70px auto;
+    background-color: rgba(20, 19, 20, 0.6);
+}
+
+#modal p {
+    color: #DFD998;
+}
+
+#modal-button {
+    display: block;
+    margin: auto;
+    margin-top: -50px;
+    margin-bottom: 50px;
+    border-radius: 3px;
+    font-family: 'Press Start 2P', arial;
+    color: ghostwhite;
+    background-color: #47619B;
+    box-shadow: 0 5px 2px rgb(155, 28, 95);
+    text-shadow: 0 2px 2px black;
+    padding: 6px;
+    cursor: pointer;
+}
+
+#modal-button:hover {
+    transform: scale(1.1);
+    transition: .2s;
+}
+
+#close {
+    border-radius: 3px;
+    font-family: 'Press Start 2P', arial;
+    color: ghostwhite;
+    background-color: #47619B;
+    box-shadow: 0 5px 2px rgb(155, 28, 95);
+    text-shadow: 0 2px 2px black;
+    padding: 8px;
+    margin-bottom: 100px;
+    cursor: pointer;
+}
+
+#close:hover {
+    transform: scale(1.1);
+    transition: .2s;
 }
 
 #robot1, #robot2 {
@@ -80,12 +168,24 @@ p {
 }
 
 @keyframes fadein {
-    from {
-        opacity:0;
-    }
-    to {
-        opacity:1;
-    }
+    from {opacity:0;}
+    to {opacity:1;}
+}
+
+@keyframes fadeout {
+    from {opacity:1;}
+    to {opacity:0;}
+}
+
+@keyframes pulse {
+  25%  {transform: scale(0.9);}
+  75%  {transform: scale(1.1);}
+}
+@keyframes push {
+  50%  {transform: scale(0.8);}
+}
+@keyframes pop {
+  50%  {transform: scale(1.2);}
 }
 
 #main-robot {
@@ -97,6 +197,26 @@ p {
     animation: fadein 2s;
 }
 
+#player-turn {
+    width: 150px;
+    height: 30px;
+    position: absolute;
+    border: 3px solid rgb(62, 87, 144);
+    border-radius: 5px;
+    position: absolute;
+    right: 0;
+    margin-top: -3px;
+    margin-right: -3px;
+    color: #DFD998;
+    font-family: 'Press Start 2P', arial;
+    background-color: rgba(20, 19, 20, 1);
+    text-shadow: 0 5px 5px black;
+    text-align: center;
+    z-index: 1;
+    overflow: visible;
+    animation: pulse 0.5s ease-in infinite;
+}
+
 
 .button {
     border-radius: 3px;
@@ -106,6 +226,7 @@ p {
     box-shadow: 0 5px 2px rgb(155, 28, 95);
     text-shadow: 0 2px 2px black;
     padding: 6px;
+    margin-left: 8px;
     cursor: pointer;
 }
 
@@ -134,31 +255,6 @@ p {
     position: absolute;
 }
 
-.borderBlink{
-    border: 2px dotted transparent;
-    border-radius: 3px;
-    -webkit-animation: borderBlink 0.5s step-end infinite;
-    animation: borderBlink 0.5s step-end infinite;
-}
-
-@keyframes borderBlink {
-    from, to {
-        border-color: transparent;
-    }
-    50% {
-        border-color: #3E5790;
-    }
-}
-
-@-webkit-keyframes borderBlink {
-    from, to {
-        border-color: transparent;
-    }
-    50% {
-        border-color: #3E5790;
-    }
-}
-
 .heart-container {
     width: 260px;
     height: 50px;
@@ -170,13 +266,14 @@ p {
     height: 50px;
     display: inline-block;
     float: right;
+    margin-top: -75px;
 }
 
 .heart-container img {
     height: 40px;
     width: 40px;
     display: inline-block;
-    float: right;
+    left: 0;
 }
 
 .heart-container2 img {
@@ -198,6 +295,10 @@ p {
     color: ghostwhite;
     font-family: 'Press Start 2P', arial;
     cursor: pointer;
+}
+
+.first.choice {
+    margin-top: 30px;
 }
 
 .choice:hover {

@@ -3,24 +3,49 @@
 
 $(()=>{
 
+    $('html').css('animation', 'fadein 4s');
+
     //////////////////////////////////////////////////////////////////////////////////////////////////////
+    // Modal //
     //////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
+    const $openBtn = $('#modal-button');
+    const $modal = $('#modal');
+    const $closeBtn = $('#close');
+
+    const openModal = () =>{
+        $modal.css('display', 'block');
+    }
+
+    const closeModal = () =>{
+        $modal.css('display', 'none');
+    }
+
+    $openBtn.on('click', openModal);
+
+    $closeBtn.on('click', closeModal);
+
+    //////////////////////////////////////////////////////////////////////////////////////////////////////
+    // Heart Functions//
+    //////////////////////////////////////////////////////////////////////////////////////////////////////
 
     const $heartContainer = $('.heart-container');
 
     const heartPushP1 = ()=>{
-        $heartContainer.append($("<img src='images/hearts/vectorstock_15134146.png'>").attr('class', 'heartP1'));
+        $heartContainer.append($("<img src='images/hearts/vectorstock_15134146.png'>").attr('class', 'heartP1').css('animation', 'fadein 1s'));
         if ($('.heartP1').eq(4).length) {
-            console.log('Player 1 max hearts acheived!');
+            $dialogue.text("PLAYER ONE has achieved MAX hearts!")
         }
     }
 
     const heartPopP1 = ()=>{
-        $('.heartP1').eq(0).remove();
+        $('.heartP1').eq(0).css('animation', 'fadeout 1.5s');
+        setTimeout(()=>{
+            $('.heartP1').eq(0).remove()
+        }, 1500)
         if ($heartContainer.is(":empty")) {
-            console.log('Player 1 loses.');
+            heartTally();
         }
     }
 
@@ -29,16 +54,19 @@ $(()=>{
     const $heartContainer2 = $('.heart-container2');
 
     const heartPushP2 = ()=>{
-        $heartContainer2.append($("<img src='images/hearts/purpleheart.png'>").attr('class', 'heartP2'));
+        $heartContainer2.append($("<img src='images/hearts/purpleheart.png'>").attr('class', 'heartP2').css('animation', 'fadein 1s'));
         if ($('.heartP2').eq(4).length) {
-            console.log('Player 2 max hearts acheived!');
+            $dialogue.text("PLAYER TWO has achieved MAX hearts!");
         }
     }
 
     const heartPopP2 = ()=>{
-        $('.heartP2').eq(0).remove();
+        $('.heartP2').eq(0).css('animation', 'fadeout 1.5s');
+        setTimeout(()=>{
+            $('.heartP2').eq(0).remove()
+        }, 1500)
         if ($heartContainer2.is(":empty")) {
-            console.log('Player 2 loses.');
+            heartTally();
         }
     }
 
@@ -46,18 +74,59 @@ $(()=>{
 
     const heartTally = ()=>{
         if ($('.heartP1').length > $('.heartP2').length) {
-            console.log('Player 1 has more hearts and wins the date!');
+            $heartContainer.css('animation', 'pulse 0.5s ease-in infinite');
+            $('h2').css('animation', 'fadeout 3s');
+            $('#modal-button').css('animation', 'fadeout 3s');
+            $heartContainer2.css('animation', 'fadeout 3s');
+            $choiceBox.css('animation', 'fadeout 3s');
+            $robot2.css('animation', 'fadeout 3s');
+            $dialogue.text("Congratulations PLAYER ONE! You win the date!");
+            setTimeout(()=>{
+                $('h2').hide();
+                $('#modal-button').hide();
+                $heartContainer2.hide();
+                $choiceBox.hide();
+                $robot2.hide();
+            }, 3000);
         }
         if ($('.heartP2').length > $('.heartP1').length) {
-            console.log('Player 2 has more hearts and wins the date!');
+            $heartContainer2.css('animation', 'pulse 0.5s ease-in infinite');
+            $('h2').css('animation', 'fadeout 3s');
+            $('#modal-button').css('animation', 'fadeout 3s');
+            $heartContainer.css('animation', 'fadeout 3s');
+            $choiceBox.css('animation', 'fadeout 3s');
+            $robot1.css('animation', 'fadeout 3s');
+            $dialogue.text("Congratulations PLAYER TWO! You win the date!");
+            setTimeout(()=>{
+                $('h2').hide();
+                $('#modal-button').hide();
+                $heartContainer.hide();
+                $choiceBox.hide();
+                $robot1.hide();
+            }, 3000);
         }
         if ($('.heartP1').length === $('.heartP2').length) {
-            console.log('It\'s a tie! Flip a coin.' );
+            $dialogue.text("It's a tie! Your potential date goes home and you hang out with each other.");
+            $('h2').css('animation', 'fadeout 3s');
+            $('#modal-button').css('animation', 'fadeout 3s');
+            $heartContainer.css('animation', 'fadeout 3s');
+            $heartContainer2.css('animation', 'fadeout 3s');
+            $choiceBox.css('animation', 'fadeout 3s');
+            $mainBot.css('animation', 'fadeout 3s');
+            setTimeout(()=>{
+                $('h2').hide();
+                $('#modal-button').hide();
+                $mainBot.hide();
+                $heartContainer.hide();
+                $heartContainer2.hide();
+                $choiceBox.hide();
+            }, 3000);
         }
     }
 
 
     //////////////////////////////////////////////////////////////////////////////////////////////////////
+    // Robot Storage//
     //////////////////////////////////////////////////////////////////////////////////////////////////////
 
     const robots = [];
@@ -87,6 +156,7 @@ $(()=>{
     robots.push($rob10);
 
     //////////////////////////////////////////////////////////////////////////////////////////////////////
+    // Personality Types Function//
     //////////////////////////////////////////////////////////////////////////////////////////////////////
 
     let sanguine = "SANGUINE";
@@ -103,6 +173,7 @@ $(()=>{
     };
 
     //////////////////////////////////////////////////////////////////////////////////////////////////////
+    // Player Spawn Functions//
     //////////////////////////////////////////////////////////////////////////////////////////////////////
 
     const createPlayer1 = ()=>{
@@ -132,6 +203,7 @@ $(()=>{
     const $mainBot = $("#main-robot");
 
     //////////////////////////////////////////////////////////////////////////////////////////////////////
+    // Game Dialogue Kickoff//
     //////////////////////////////////////////////////////////////////////////////////////////////////////
 
     const $nextButton = $('.button');
@@ -150,16 +222,28 @@ $(()=>{
                 $nextButton.text(typeRandom);
                 $('#main-robot').css('transform', 'scaleX(-1)');
                 if ($nextButton.text() === "SANGUINE") {
-                    $nextButton.on('click', sanguineGame);
+                    $nextButton.on('click', ()=>{
+                        sanguineGame();
+                        $choiceBox.children().show();
+                    });
                 }
                 if ($nextButton.text() === "CHOLERIC") {
-                    $nextButton.on('click', cholericGame);
+                    $nextButton.on('click', ()=>{
+                        cholericGame();
+                        $choiceBox.children().show();
+                    });
                 }
                 if ($nextButton.text() === "MELANCHOLIC") {
-                    $nextButton.on('click', melancholicGame);
+                    $nextButton.on('click', ()=>{
+                        melancholicGame();
+                        $choiceBox.children().show();
+                    });
                 }
                 if ($nextButton.text() === "PHLEGMATIC") {
-                    $nextButton.on('click', phlegmaticGame);
+                    $nextButton.on('click', ()=>{
+                        phlegmaticGame();
+                        $choiceBox.children().show();
+                    });
                 }
             });
         })
@@ -169,6 +253,7 @@ $(()=>{
 
 
     //////////////////////////////////////////////////////////////////////////////////////////////////////
+    // Random Robot Name Generator//
     //////////////////////////////////////////////////////////////////////////////////////////////////////
 
     const nums = [00, 14, 29, 3, 404, 15, 6, 67, 81, 90];
@@ -184,6 +269,7 @@ $(()=>{
     };
 
     //////////////////////////////////////////////////////////////////////////////////////////////////////
+    // Variable Shortcuts and Clear Choice Function//
     //////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
@@ -196,6 +282,7 @@ $(()=>{
     const $buttonC = $('.third.choice');
 
     const $choiceBox = $('#bottom-main');
+    const $playerTurn = $('#player-turn');
 
     const $success = ()=>{
         $dialogue.text("Target. seems. interested. Eureka!");
@@ -212,127 +299,139 @@ $(()=>{
     };
 
     //////////////////////////////////////////////////////////////////////////////////////////////////////
+    // Sanguine Tree Dialogue//
     //////////////////////////////////////////////////////////////////////////////////////////////////////
 
     const sanguineGame = ()=>{
         $dialogue.text("PLAYER ONE: INITIATE CONTACT...");
-        $robot1.addClass('borderBlink');
+        $playerTurn.text("PLAYER ONE").css('animation', 'fadein 2s').css('animation', 'pulse 0.5s ease-in infinite');
+        $robot1.css('animation', 'pop 1s');
         $letterA.append("<p>Wouldn't you rather be reading tonight?</p>").on('click', ()=>{
             $malfunction();
+            $robot1.css('animation', '');
             $letterA.off('click');
             $letterB.off('click');
             $letterC.off('click');
             heartPopP1();
             setTimeout(()=>{
-                sanguineGame2P()
+                sanguineGameP2()
             }, 1000)
         });
         $letterB.append("<p>Forgive me, I'm shy.</p>").on('click', ()=>{
             $malfunction();
+            $robot1.css('animation', '');
             $letterA.off('click');
             $letterB.off('click');
             $letterC.off('click');
             heartPopP1();
             setTimeout(()=>{
-                sanguineGame2P()
+                sanguineGameP2()
             }, 1000)
         });
         $letterC.append("<p>Have you been to any good shows lately?</p>").on('click', ()=>{
             $success();
+            $robot1.css('animation', '');
             $letterA.off('click');
             $letterB.off('click');
             $letterC.off('click');
             heartPushP1();
             setTimeout(()=>{
-                sanguineGame2P()
+                sanguineGameP2()
             }, 1000)
         });
     };
 
     const sanguineGameRound2 = ()=>{
         $clearChoices();
-        $dialogue.text("PLAYER ONE");
-        $robot2.removeClass('borderBlink');
-        $robot1.addClass('borderBlink');
+        $dialogue.text("");
+        $playerTurn.text("PLAYER ONE").css('animation', 'fadein 2s').css('animation', 'pulse 0.5s ease-in infinite');
+        $robot1.css('animation', 'pop 1s');
         $letterA.append("<p>I hate social events, but I like you!</p>").on('click', ()=>{
             $malfunction();
+            $robot1.css('animation', '');
             $letterA.off('click');
             $letterB.off('click');
             $letterC.off('click');
             heartPopP1();
             setTimeout(()=>{
-                sanguineGame2PRound2()
+                sanguineGameP2Round2()
             }, 1000)
         });
         $letterB.append("<p>I find enthusiasm for existence to be priority.</p>").on('click', ()=>{
             $success();
+            $robot1.css('animation', '');
             $letterA.off('click');
             $letterB.off('click');
             $letterC.off('click');
             heartPushP1();
             setTimeout(()=>{
-                sanguineGame2PRound2();
+                sanguineGameP2Round2();
             }, 1000)
         });
         $letterC.append("<p>You are quite forward, but that's OK... I guess.</p>").on('click', ()=>{
             $malfunction();
+            $robot1.css('animation', '');
             $letterA.off('click');
             $letterB.off('click');
             $letterC.off('click');
             heartPopP1();
             setTimeout(()=>{
-                sanguineGame2PRound2();
+                sanguineGameP2Round2();
             }, 1000)
         });
     };
 
     const sanguineGameRound3 = ()=>{
         $clearChoices();
-        $dialogue.text("PLAYER ONE");
-        $robot2.removeClass('borderBlink');
-        $robot1.addClass('borderBlink');
+        $dialogue.text("");
+        $playerTurn.text("PLAYER ONE").css('animation', 'fadein 2s').css('animation', 'pulse 0.5s ease-in infinite');
+        $robot1.css('animation', 'pop 1s');
         $letterA.append("<p>Laziness is an overlooked pastime</p>").on('click', ()=>{
             $malfunction();
+            $robot1.css('animation', '');
             $letterA.off('click');
             $letterB.off('click');
             $letterC.off('click');
             heartPopP1();
             setTimeout(()=>{
-                sanguineGame2PRound3()
+                sanguineGameP2Round3()
             }, 1000)
         });
         $letterB.append("<p>Maybe we can sit quietly somewhere?</p>").on('click', ()=>{
             $malfunction();
+            $robot1.css('animation', '');
             $letterA.off('click');
             $letterB.off('click');
             $letterC.off('click');
             heartPopP1();
             setTimeout(()=>{
-                sanguineGame2PRound3();
+                sanguineGameP2Round3();
             }, 1000)
         });
         $letterC.append("<p>I am in the mood for something spontaneous!</p>").on('click', ()=>{
             $success();
+            $robot1.css('animation', '');
             $letterA.off('click');
             $letterB.off('click');
             $letterC.off('click');
             heartPushP1();
             setTimeout(()=>{
-                sanguineGame2PRound3();
+                sanguineGameP2Round3();
             }, 1000)
         });
     };
 
     //////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    const sanguineGame2P = ()=>{
+    const sanguineGameP2 = ()=>{
         createPlayer2();
         $clearChoices();
         $dialogue.text(randomName2() + " has come to offer competition: PLAYER TWO INITIATES CONTACT...");
-        $robot1.removeClass('borderBlink');
-        $robot2.addClass('borderBlink');
+        $playerTurn.text("PLAYER TWO").css('animation', 'fadein 2s').css('animation', 'pulse 0.5s ease-in infinite');
+        $robot2.css('animation', 'pop 1s');
         $letterA.append("<p>I could use some peace and quiet, you?</p>").on('click', ()=>{
             $malfunction();
+            $robot2.css('animation', '');
             $letterA.off('click');
             $letterB.off('click');
             $letterC.off('click');
@@ -343,6 +442,7 @@ $(()=>{
         });
         $letterB.append("<p>Let's go on an adventure!</p>").on('click', ()=>{
             $success();
+            $robot2.css('animation', '');
             $letterA.off('click');
             $letterB.off('click');
             $letterC.off('click');
@@ -353,6 +453,7 @@ $(()=>{
         });
         $letterC.append("<p>I'd rather be in my charging pod tonight.</p>").on('click', ()=>{
             $malfunction();
+            $robot2.css('animation', '');
             $letterA.off('click');
             $letterB.off('click');
             $letterC.off('click');
@@ -364,13 +465,14 @@ $(()=>{
 
     };
 
-    const sanguineGame2PRound2 = ()=>{
+    const sanguineGameP2Round2 = ()=>{
         $clearChoices();
-        $dialogue.text("PLAYER TWO");
-        $robot1.removeClass('borderBlink');
-        $robot2.addClass('borderBlink');
+        $dialogue.text("");
+        $playerTurn.text("PLAYER TWO").css('animation', 'fadein 2s').css('animation', 'pulse 0.5s ease-in infinite');
+        $robot2.css('animation', 'pop 1s');
         $letterA.append("<p>Boredom is the worst, right?</p>").on('click', ()=>{
             $success();
+            $robot2.css('animation', '');
             $letterA.off('click');
             $letterB.off('click');
             $letterC.off('click');
@@ -381,6 +483,7 @@ $(()=>{
         });
         $letterB.append("<p>Can you lower your voice a bit?</p>").on('click', ()=>{
             $malfunction();
+            $robot2.css('animation', '');
             $letterA.off('click');
             $letterB.off('click');
             $letterC.off('click');
@@ -389,8 +492,9 @@ $(()=>{
                 sanguineGameRound3();
             }, 1000)
         });
-        $letterC.append("<p>My patience for people is thin, except for with you.</p>").on('click', ()=>{
+        $letterC.append("<p>My patience runs low, except with you.</p>").on('click', ()=>{
             $malfunction();
+            $robot2.css('animation', '');
             $letterA.off('click');
             $letterB.off('click');
             $letterC.off('click');
@@ -401,13 +505,14 @@ $(()=>{
         });
     };
 
-    const sanguineGame2PRound3 = ()=>{
+    const sanguineGameP2Round3 = ()=>{
         $clearChoices();
-        $dialogue.text("PLAYER TWO");
-        $robot1.removeClass('borderBlink');
-        $robot2.addClass('borderBlink');
+        $dialogue.text("");
+        $playerTurn.text("PLAYER TWO").css('animation', 'fadein 2s').css('animation', 'pulse 0.5s ease-in infinite');
+        $robot2.css('animation', 'pop 1s');
         $letterA.append("<p>Things move too fast in the city, right?</p>").on('click', ()=>{
             $malfunction();
+            $robot2.css('animation', '');
             $letterA.off('click');
             $letterB.off('click');
             $letterC.off('click');
@@ -418,6 +523,7 @@ $(()=>{
         });
         $letterB.append("<p>My friends dragged me out... no gaming for me.</p>").on('click', ()=>{
             $malfunction();
+            $robot2.css('animation', '');
             $letterA.off('click');
             $letterB.off('click');
             $letterC.off('click');
@@ -428,6 +534,7 @@ $(()=>{
         });
         $letterC.append("<p>I love how many people are out tonight!</p>").on('click', ()=>{
             $success();
+            $robot2.css('animation', '');
             $letterA.off('click');
             $letterB.off('click');
             $letterC.off('click');
@@ -439,127 +546,139 @@ $(()=>{
     };
 
     //////////////////////////////////////////////////////////////////////////////////////////////////////
+    // Choleric Tree Dialogue//
     //////////////////////////////////////////////////////////////////////////////////////////////////////
 
     const cholericGame = ()=>{
         $dialogue.text("PLAYER ONE: INITIATE CONTACT...");
-        $robot1.addClass('borderBlink');
+        $playerTurn.text("PLAYER ONE").css('animation', 'fadein 2s').css('animation', 'pulse 0.5s ease-in infinite');
+        $robot1.css('animation', 'pop 1s');
         $letterA.append("<p>I need people to motivate me, you?</p>").on('click', ()=>{
             $malfunction();
+            $robot1.css('animation', '');
             $letterA.off('click');
             $letterB.off('click');
             $letterC.off('click');
             heartPopP1();
             setTimeout(()=>{
-                cholericGame2P()
+                cholericGameP2()
             }, 1000)
         });
         $letterB.append("<p>I don't need anybody to make me feel happy.</p>").on('click', ()=>{
             $success();
+            $robot1.css('animation', '');
             $letterA.off('click');
             $letterB.off('click');
             $letterC.off('click');
             heartPushP1();
             setTimeout(()=>{
-                cholericGame2P();
+                cholericGameP2();
             }, 1000)
         });
-        $letterC.append("<p>My goals can wait, there's fun to be had tonight!</p>").on('click', ()=>{
+        $letterC.append("<p>My goals can wait, let's have fun tonight!</p>").on('click', ()=>{
             $malfunction();
+            $robot1.css('animation', '');
             $letterA.off('click');
             $letterB.off('click');
             $letterC.off('click');
             heartPopP1();
             setTimeout(()=>{
-                cholericGame2P();
+                cholericGameP2();
             }, 1000)
         });
     };
 
     const cholericGameRound2 = ()=>{
         $clearChoices();
-        $dialogue.text("PLAYER ONE");
-        $robot2.removeClass('borderBlink');
-        $robot1.addClass('borderBlink');
+        $dialogue.text("");
+        $playerTurn.text("PLAYER ONE").css('animation', 'fadein 2s').css('animation', 'pulse 0.5s ease-in infinite');
+        $robot1.css('animation', 'pop 1s');
         $letterA.append("<p>I live in my maker's basement, it's quite cozy.</p>").on('click', ()=>{
             $malfunction();
+            $robot1.css('animation', '');
             $letterA.off('click');
             $letterB.off('click');
             $letterC.off('click');
             heartPopP1();
             setTimeout(()=>{
-                cholericGame2PRound2()
+                cholericGameP2Round2()
             }, 1000)
         });
         $letterB.append("<p>Not sure what tomorrow brings and I don't care!</p>").on('click', ()=>{
             $malfunction();
+            $robot1.css('animation', '');
             $letterA.off('click');
             $letterB.off('click');
             $letterC.off('click');
             heartPopP1();
             setTimeout(()=>{
-                cholericGame2PRound2();
+                cholericGameP2Round2();
             }, 1000)
         });
-        $letterC.append("<p>Time to check in on my metrics... gotta stay fit!</p>").on('click', ()=>{
+        $letterC.append("<p>One sec... gotta check my fitness metrics.</p>").on('click', ()=>{
             $success();
+            $robot1.css('animation', '');
             $letterA.off('click');
             $letterB.off('click');
             $letterC.off('click');
             heartPushP1();
             setTimeout(()=>{
-                cholericGame2PRound2();
+                cholericGameP2Round2();
             }, 1000)
         });
     }
 
     const cholericGameRound3 = ()=>{
         $clearChoices();
-        $dialogue.text("PLAYER ONE");
-        $robot2.removeClass('borderBlink');
-        $robot1.addClass('borderBlink');
+        $dialogue.text("");
+        $playerTurn.text("PLAYER ONE").css('animation', 'fadein 2s').css('animation', 'pulse 0.5s ease-in infinite');
+        $robot1.css('animation', 'pop 1s');
         $letterA.append("<p>Organization is very important, right?</p>").on('click', ()=>{
             $success();
+            $robot1.css('animation', '');
             $letterA.off('click');
             $letterB.off('click');
             $letterC.off('click');
             heartPushP1();
             setTimeout(()=>{
-                cholericGame2PRound3()
+                cholericGameP2Round3()
             }, 1000)
         });
-        $letterB.append("<p>I don't worry much about logistics, randomness is good.</p>").on('click', ()=>{
+        $letterB.append("<p>Logistics don't matter, randomness is good.</p>").on('click', ()=>{
             $malfunction();
+            $robot1.css('animation', '');
             $letterA.off('click');
             $letterB.off('click');
             $letterC.off('click');
             heartPopP1();
             setTimeout(()=>{
-                cholericGame2PRound3();
+                cholericGameP2Round3();
             }, 1000)
         });
-        $letterC.append("<p>I can never decide on what to do next, any ideas?</p>").on('click', ()=>{
+        $letterC.append("<p>I never decide on what to do next, any ideas?</p>").on('click', ()=>{
             $malfunction();
+            $robot1.css('animation', '');
             $letterA.off('click');
             $letterB.off('click');
             $letterC.off('click');
             heartPopP1();
             setTimeout(()=>{
-                cholericGame2PRound3();
+                cholericGameP2Round3();
             }, 1000)
         });
     }
 
     //////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    const cholericGame2P = ()=>{
+    const cholericGameP2 = ()=>{
         createPlayer2();
         $clearChoices();
         $dialogue.text(randomName2() + " has come to offer competition: PLAYER TWO INITIATES CONTACT...");
-        $robot1.removeClass('borderBlink');
-        $robot2.addClass('borderBlink');
+        $playerTurn.text("PLAYER TWO").css('animation', 'fadein 2s').css('animation', 'pulse 0.5s ease-in infinite');
+        $robot2.css('animation', 'pop 1s');
         $letterA.append("<p>I like to spend time wandering, let's wander!</p>").on('click', ()=>{
             $malfunction();
+            $robot2.css('animation', '');
             $letterA.off('click');
             $letterB.off('click');
             $letterC.off('click');
@@ -570,6 +689,7 @@ $(()=>{
         });
         $letterB.append("<p>I'm organizing an event tonight, care to join?</p>").on('click', ()=>{
             $success();
+            $robot2.css('animation', '');
             $letterA.off('click');
             $letterB.off('click');
             $letterC.off('click');
@@ -580,6 +700,7 @@ $(()=>{
         });
         $letterC.append("<p>I don't like doing things alone, glad I met you!</p>").on('click', ()=>{
             $malfunction();
+            $robot2.css('animation', '');
             $letterA.off('click');
             $letterB.off('click');
             $letterC.off('click');
@@ -590,13 +711,14 @@ $(()=>{
         });
     }
 
-    const cholericGame2PRound2 = ()=>{
+    const cholericGameP2Round2 = ()=>{
         $clearChoices();
-        $dialogue.text("PLAYER TWO");
-        $robot1.removeClass('borderBlink');
-        $robot2.addClass('borderBlink');
+        $dialogue.text("");
+        $playerTurn.text("PLAYER TWO").css('animation', 'fadein 2s').css('animation', 'pulse 0.5s ease-in infinite');
+        $robot2.css('animation', 'pop 1s');
         $letterA.append("<p>Today was busy, but I got a lot done. Yay me!</p>").on('click', ()=>{
             $success();
+            $robot2.css('animation', '');
             $letterA.off('click');
             $letterB.off('click');
             $letterC.off('click');
@@ -607,6 +729,7 @@ $(()=>{
         });
         $letterB.append("<p>Being single is the worst! Let's fix that.</p>").on('click', ()=>{
             $malfunction();
+            $robot2.css('animation', '');
             $letterA.off('click');
             $letterB.off('click');
             $letterC.off('click');
@@ -617,6 +740,7 @@ $(()=>{
         });
         $letterC.append("<p>Can you give me validation? I'm sad.</p>").on('click', ()=>{
             $malfunction();
+            $robot2.css('animation', '');
             $letterA.off('click');
             $letterB.off('click');
             $letterC.off('click');
@@ -627,168 +751,180 @@ $(()=>{
         });
     }
 
-    const cholericGame2PRound3 = ()=>{
+    const cholericGameP2Round3 = ()=>{
         $clearChoices();
-        $dialogue.text("PLAYER TWO");
-        $robot1.removeClass('borderBlink');
-        $robot2.addClass('borderBlink');
-        $letterA.append("<p>If we can't hang out, I'll just call it a night.</p>").on('click', ()=>{
+        $dialogue.text("");
+        $playerTurn.text("PLAYER TWO").css('animation', 'fadein 2s').css('animation', 'pulse 0.5s ease-in infinite');
+        $robot2.css('animation', 'pop 1s');
+        $letterA.append("<p>If we can't hang, I'll just call it a night.</p>").on('click', ()=>{
             $malfunction();
+            $robot2.css('animation', '');
             $letterA.off('click');
             $letterB.off('click');
             $letterC.off('click');
             heartPopP2();
             setTimeout(()=>{
-                // tally points
-                // end game
+                heartTally();
             }, 1000)
         });
-        $letterB.append("<p>I love it when a cute robot acknowledges me! Wink wink.</p>").on('click', ()=>{
+        $letterB.append("<p>I love it when a cute robot acknowledges me!</p>").on('click', ()=>{
             $malfunction();
+            $robot2.css('animation', '');
             $letterA.off('click');
             $letterB.off('click');
             $letterC.off('click');
             heartPopP2();
             setTimeout(()=>{
-                // tally points
-                // end game
+                heartTally();
             }, 1000)
         });
         $letterC.append("<p>Don't you love it when a plan comes together?</p>").on('click', ()=>{
             $success();
+            $robot2.css('animation', '');
             $letterA.off('click');
             $letterB.off('click');
             $letterC.off('click');
             heartPushP2();
             setTimeout(()=>{
-                // tally points
-                // end game
+                heartTally();
             }, 1000)
         });
     }
 
     //////////////////////////////////////////////////////////////////////////////////////////////////////
+    // Melancholic Tree Dialogue//
     //////////////////////////////////////////////////////////////////////////////////////////////////////
 
     const melancholicGame = ()=>{
         $dialogue.text("PLAYER ONE: INITIATE CONTACT...");
-        $robot1.addClass('borderBlink');
+        $playerTurn.text("PLAYER ONE").css('animation', 'fadein 2s').css('animation', 'pulse 0.5s ease-in infinite');
+        $robot1.css('animation', 'pop 1s');
         $letterA.append("<p>No time to think, just to act, amiright?</p>").on('click', ()=>{
             $malfunction();
+            $robot1.css('animation', '');
             $letterA.off('click');
             $letterB.off('click');
             $letterC.off('click');
             heartPopP1();
             setTimeout(()=>{
-                melancholicGame2P()
+                melancholicGameP2()
             }, 1000)
         });
         $letterB.append("<p>Love to ponder existentialism, don't you?</p>").on('click', ()=>{
             $success();
+            $robot1.css('animation', '');
             $letterA.off('click');
             $letterB.off('click');
             $letterC.off('click');
             heartPushP1();
             setTimeout(()=>{
-                melancholicGame2P();
+                melancholicGameP2();
             }, 1000)
         });
         $letterC.append("<p>Lyrics? Not as important as a phat bassline.</p>").on('click', ()=>{
             $malfunction();
+            $robot1.css('animation', '');
             $letterA.off('click');
             $letterB.off('click');
             $letterC.off('click');
             heartPopP1();
             setTimeout(()=>{
-                melancholicGame2P();
+                melancholicGameP2();
             }, 1000)
         });
     };
 
     const melancholicGameRound2 = ()=>{
         $clearChoices();
-        $dialogue.text("PLAYER ONE");
-        $robot2.removeClass('borderBlink');
-        $robot1.addClass('borderBlink');
+        $dialogue.text("");
+        $playerTurn.text("PLAYER ONE").css('animation', 'fadein 2s').css('animation', 'pulse 0.5s ease-in infinite');
+        $robot1.css('animation', 'pop 1s');
         $letterA.append("<p>Overthinking is for meatbags, let's party!</p>").on('click', ()=>{
             $malfunction();
+            $robot1.css('animation', '');
             $letterA.off('click');
             $letterB.off('click');
             $letterC.off('click');
             heartPopP1();
             setTimeout(()=>{
-                melancholicGame2PRound2()
+                melancholicGameP2Round2()
             }, 1000)
         });
         $letterB.append("<p>Not much on sensitivity, but I'm funny!</p>").on('click', ()=>{
             $malfunction();
+            $robot1.css('animation', '');
             $letterA.off('click');
             $letterB.off('click');
             $letterC.off('click');
             heartPopP1();
             setTimeout(()=>{
-                melancholicGame2PRound2();
+                melancholicGameP2Round2();
             }, 1000)
         });
         $letterC.append("<p>Ever wonder what it is to be sentient?</p>").on('click', ()=>{
             $success();
+            $robot1.css('animation', '');
             $letterA.off('click');
             $letterB.off('click');
             $letterC.off('click');
             heartPushP1();
             setTimeout(()=>{
-                melancholicGame2PRound2();
+                melancholicGameP2Round2();
             }, 1000)
         });
     }
 
     const melancholicGameRound3 = ()=>{
         $clearChoices();
-        $dialogue.text("PLAYER ONE");
-        $robot2.removeClass('borderBlink');
-        $robot1.addClass('borderBlink');
+        $dialogue.text("");
+        $playerTurn.text("PLAYER ONE").css('animation', 'fadein 2s').css('animation', 'pulse 0.5s ease-in infinite');
+        $robot1.css('animation', 'pop 1s');
         $letterA.append("<p>I don't spend much on detail, gitur done!</p>").on('click', ()=>{
             $malfunction();
+            $robot1.css('animation', '');
             $letterA.off('click');
             $letterB.off('click');
             $letterC.off('click');
             heartPopP1();
             setTimeout(()=>{
-                melancholicGame2PRound3()
+                melancholicGameP2Round3()
             }, 1000)
         });
         $letterB.append("<p>Let's stop worrying about tomorrow, yes?</p>").on('click', ()=>{
             $malfunction();
+            $robot1.css('animation', '');
             $letterA.off('click');
             $letterB.off('click');
             $letterC.off('click');
             heartPopP1();
             setTimeout(()=>{
-                melancholicGame2PRound3();
+                melancholicGameP2Round3();
             }, 1000)
         });
         $letterC.append("<p>You look cute when you're deep in thought.</p>").on('click', ()=>{
             $success();
+            $robot1.css('animation', '');
             $letterA.off('click');
             $letterB.off('click');
             $letterC.off('click');
             heartPushP1();
             setTimeout(()=>{
-                melancholicGame2PRound3();
+                melancholicGameP2Round3();
             }, 1000)
         });
     }
 
     //////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    const melancholicGame2P = ()=>{
+    const melancholicGameP2 = ()=>{
         createPlayer2();
         $clearChoices();
         $dialogue.text(randomName2() + " has come to offer competition: PLAYER TWO INITIATES CONTACT...");
-        $robot1.removeClass('borderBlink');
-        $robot2.addClass('borderBlink');
+        $playerTurn.text("PLAYER TWO").css('animation', 'fadein 2s').css('animation', 'pulse 0.5s ease-in infinite');
+        $robot2.css('animation', 'pop 1s');
         $letterA.append("<p>I don't feel sad for very long.</p>").on('click', ()=>{
             $malfunction();
+            $robot2.css('animation', '');
             $letterA.off('click');
             $letterB.off('click');
             $letterC.off('click');
@@ -797,8 +933,9 @@ $(()=>{
                 melancholicGameRound2()
             }, 1000)
         });
-        $letterB.append("<p>I almost overanalyzed my way out of this situation.</p>").on('click', ()=>{
+        $letterB.append("<p>Almost overanalyzed my way out of this situation.</p>").on('click', ()=>{
             $success();
+            $robot2.css('animation', '');
             $letterA.off('click');
             $letterB.off('click');
             $letterC.off('click');
@@ -809,6 +946,7 @@ $(()=>{
         });
         $letterC.append("<p>I saw you and just HAD to come say hi!</p>").on('click', ()=>{
             $malfunction();
+            $robot2.css('animation', '');
             $letterA.off('click');
             $letterB.off('click');
             $letterC.off('click');
@@ -819,13 +957,14 @@ $(()=>{
         });
     }
 
-    const melancholicGame2PRound2 = ()=>{
+    const melancholicGameP2Round2 = ()=>{
         $clearChoices();
-        $dialogue.text("PLAYER TWO");
-        $robot1.removeClass('borderBlink');
-        $robot2.addClass('borderBlink');
-        $letterA.append("<p>I spent too much time deciding what to wear tonight.</p>").on('click', ()=>{
+        $dialogue.text("");
+        $playerTurn.text("PLAYER TWO").css('animation', 'fadein 2s').css('animation', 'pulse 0.5s ease-in infinite');
+        $robot2.css('animation', 'pop 1s');
+        $letterA.append("<p>I spent too much time deciding what to wear.</p>").on('click', ()=>{
             $success();
+            $robot2.css('animation', '');
             $letterA.off('click');
             $letterB.off('click');
             $letterC.off('click');
@@ -836,6 +975,7 @@ $(()=>{
         });
         $letterB.append("<p>Flippancy isn't a bad trait, right?</p>").on('click', ()=>{
             $malfunction();
+            $robot2.css('animation', '');
             $letterA.off('click');
             $letterB.off('click');
             $letterC.off('click');
@@ -846,6 +986,7 @@ $(()=>{
         });
         $letterC.append("<p>I don't care much for dramatic movies.</p>").on('click', ()=>{
             $malfunction();
+            $robot2.css('animation', '');
             $letterA.off('click');
             $letterB.off('click');
             $letterC.off('click');
@@ -855,168 +996,180 @@ $(()=>{
         });
     }
 
-    const melancholicGame2PRound3 = ()=>{
+    const melancholicGameP2Round3 = ()=>{
         $clearChoices();
-        $dialogue.text("PLAYER TWO");
-        $robot1.removeClass('borderBlink');
-        $robot2.addClass('borderBlink');
+        $dialogue.text("");
+        $playerTurn.text("PLAYER TWO").css('animation', 'fadein 2s').css('animation', 'pulse 0.5s ease-in infinite');
+        $robot2.css('animation', 'pop 1s');
         $letterA.append("<p>My favorite movies are Action movies.</p>").on('click', ()=>{
             $malfunction();
+            $robot2.css('animation', '');
             $letterA.off('click');
             $letterB.off('click');
             $letterC.off('click');
             heartPopP2();
             setTimeout(()=>{
-                // tally points
-                // end game
+                heartTally();
             }, 1000)
         });
         $letterB.append("<p>Are you a worrywort like me?</p>").on('click', ()=>{
             $success();
+            $robot2.css('animation', '');
             $letterA.off('click');
             $letterB.off('click');
             $letterC.off('click');
             heartPushP2();
             setTimeout(()=>{
-                // tally points
-                // end game
+                heartTally();
             }, 1000)
         });
         $letterC.append("<p>I saw the sappiest movie yesterday, ugh.</p>").on('click', ()=>{
             $malfunction();
+            $robot2.css('animation', '');
             $letterA.off('click');
             $letterB.off('click');
             $letterC.off('click');
             heartPopP2();
             setTimeout(()=>{
-                // tally points
-                // end game
+                heartTally();
             }, 1000)
         });
     }
 
     //////////////////////////////////////////////////////////////////////////////////////////////////////
+    // Phlegmatic Tree Dialogue//
     //////////////////////////////////////////////////////////////////////////////////////////////////////
 
     const phlegmaticGame = ()=>{
         $dialogue.text("PLAYER ONE: INITIATE CONTACT...");
-        $robot1.addClass('borderBlink');
+        $playerTurn.text("PLAYER ONE").css('animation', 'fadein 2s').css('animation', 'pulse 0.5s ease-in infinite');
+        $robot1.css('animation', 'pop 1s');
         $letterA.append("<p>Not many people out tonight, nice and peaceful.</p>").on('click', ()=>{
             $success();
+            $robot1.css('animation', '');
             $letterA.off('click');
             $letterB.off('click');
             $letterC.off('click');
             heartPushP1();
             setTimeout(()=>{
-                phlegmaticGame2P()
+                phlegmaticGameP2()
             }, 1000)
         });
         $letterB.append("<p>HEY! WHATSUP!! YOU ROCK!!</p>").on('click', ()=>{
             $malfunction();
+            $robot1.css('animation', '');
             $letterA.off('click');
             $letterB.off('click');
             $letterC.off('click');
             heartPopP1();
             setTimeout(()=>{
-                phlegmaticGame2P();
+                phlegmaticGameP2();
             }, 1000)
         });
         $letterC.append("<p>Some people say I'm too hyperactive.</p>").on('click', ()=>{
             $malfunction();
+            $robot1.css('animation', '');
             $letterA.off('click');
             $letterB.off('click');
             $letterC.off('click');
             heartPopP1();
             setTimeout(()=>{
-                phlegmaticGame2P();
+                phlegmaticGameP2();
             }, 1000)
         });
     };
 
     const phlegmaticGameRound2 = ()=>{
         $clearChoices();
-        $dialogue.text("PLAYER ONE");
-        $robot2.removeClass('borderBlink');
-        $robot1.addClass('borderBlink');
+        $dialogue.text("");
+        $playerTurn.text("PLAYER ONE").css('animation', 'fadein 2s').css('animation', 'pulse 0.5s ease-in infinite');
+        $robot1.css('animation', 'pop 1s');
         $letterA.append("<p>I just can't stay still tonight, let's move!</p>").on('click', ()=>{
             $malfunction();
+            $robot1.css('animation', '');
             $letterA.off('click');
             $letterB.off('click');
             $letterC.off('click');
             heartPopP1();
             setTimeout(()=>{
-                phlegmaticGame2PRound2();
+                phlegmaticGameP2Round2();
             }, 1000)
         });
         $letterB.append("<p>I have no problem confronting people.</p>").on('click', ()=>{
             $malfunction();
+            $robot1.css('animation', '');
             $letterA.off('click');
             $letterB.off('click');
             $letterC.off('click');
             heartPopP1();
             setTimeout(()=>{
-                phlegmaticGame2PRound2();
+                phlegmaticGameP2Round2();
             }, 1000)
         });
         $letterC.append("<p>Sometimes, saying less is more.</p>").on('click', ()=>{
             $success();
+            $robot1.css('animation', '');
             $letterA.off('click');
             $letterB.off('click');
             $letterC.off('click');
             heartPushP1();
             setTimeout(()=>{
-                phlegmaticGame2PRound2();
+                phlegmaticGameP2Round2();
             }, 1000)
         });
     }
 
     const phlegmaticGameRound3 = ()=>{
         $clearChoices();
-        $dialogue.text("PLAYER ONE");
-        $robot2.removeClass('borderBlink');
-        $robot1.addClass('borderBlink');
+        $dialogue.text("");
+        $playerTurn.text("PLAYER ONE").css('animation', 'fadein 2s').css('animation', 'pulse 0.5s ease-in infinite');
+        $robot1.css('animation', 'pop 1s');
         $letterA.append("<p>I just installed a trampoline in my living room.</p>").on('click', ()=>{
             $malfunction();
+            $robot1.css('animation', '');
             $letterA.off('click');
             $letterB.off('click');
             $letterC.off('click');
             heartPopP1();
             setTimeout(()=>{
-                phlegmaticGame2PRound3()
+                phlegmaticGameP2Round3()
             }, 1000)
         });
         $letterB.append("<p>Netflix and chill?</p>").on('click', ()=>{
             $success();
+            $robot1.css('animation', '');
             $letterA.off('click');
             $letterB.off('click');
             $letterC.off('click');
             heartPushP1();
             setTimeout(()=>{
-                phlegmaticGame2PRound3();
+                phlegmaticGameP2Round3();
             }, 1000)
         });
         $letterC.append("<p>It feels too quiet here, I need commotion.</p>").on('click', ()=>{
             $malfunction();
+            $robot1.css('animation', '');
             $letterA.off('click');
             $letterB.off('click');
             $letterC.off('click');
             heartPopP1();
             setTimeout(()=>{
-                phlegmaticGame2PRound3();
+                phlegmaticGameP2Round3();
             }, 1000)
         });
     }
 
     //////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    const phlegmaticGame2P = ()=>{
+    const phlegmaticGameP2 = ()=>{
         createPlayer2();
         $clearChoices();
         $dialogue.text(randomName2() + " has come to offer competition: PLAYER TWO INITIATES CONTACT...");
-        $robot1.removeClass('borderBlink');
-        $robot2.addClass('borderBlink');
+        $playerTurn.text("PLAYER TWO").css('animation', 'fadein 2s').css('animation', 'pulse 0.5s ease-in infinite');
+        $robot2.css('animation', 'pop 1s');
         $letterA.append("<p>I'm a bartender who loves to party!</p>").on('click', ()=>{
             $malfunction();
+            $robot2.css('animation', '');
             $letterA.off('click');
             $letterB.off('click');
             $letterC.off('click');
@@ -1027,6 +1180,7 @@ $(()=>{
         });
         $letterB.append("<p>I work from home, nothing better.</p>").on('click', ()=>{
             $success();
+            $robot2.css('animation', '');
             $letterA.off('click');
             $letterB.off('click');
             $letterC.off('click');
@@ -1037,6 +1191,7 @@ $(()=>{
         });
         $letterC.append("<p>My friends find me fun, you should too!</p>").on('click', ()=>{
             $malfunction();
+            $robot2.css('animation', '');
             $letterA.off('click');
             $letterB.off('click');
             $letterC.off('click');
@@ -1047,13 +1202,14 @@ $(()=>{
         });
     }
 
-    const phlegmaticGame2PRound2 = ()=>{
+    const phlegmaticGameP2Round2 = ()=>{
         $clearChoices();
-        $dialogue.text("PLAYER TWO");
-        $robot1.removeClass('borderBlink');
-        $robot2.addClass('borderBlink');
+        $dialogue.text("");
+        $playerTurn.text("PLAYER TWO").css('animation', 'fadein 2s').css('animation', 'pulse 0.5s ease-in infinite');
+        $robot2.css('animation', 'pop 1s');
         $letterA.append("<p>You hear that music? Let's head that way!</p>").on('click', ()=>{
             $malfunction();
+            $robot2.css('animation', '');
             $letterA.off('click');
             $letterB.off('click');
             $letterC.off('click');
@@ -1062,8 +1218,9 @@ $(()=>{
                 phlegmaticGameRound3();
             }, 1000)
         });
-        $letterB.append("<p>I'm a good public speaker, but a terrible listener.</p>").on('click', ()=>{
+        $letterB.append("<p>I'm good at talking, but a terrible listener.</p>").on('click', ()=>{
             $malfunction();
+            $robot2.css('animation', '');
             $letterA.off('click');
             $letterB.off('click');
             $letterC.off('click');
@@ -1074,6 +1231,7 @@ $(()=>{
         });
         $letterC.append("<p>My place has a real Zen Garden feel to it.</p>").on('click', ()=>{
             $success();
+            $robot2.css('animation', '');
             $letterA.off('click');
             $letterB.off('click');
             $letterC.off('click');
@@ -1084,42 +1242,42 @@ $(()=>{
         });
     }
 
-    const phlegmaticGame2PRound3 = ()=>{
+    const phlegmaticGameP2Round3 = ()=>{
         $clearChoices();
-        $dialogue.text("PLAYER TWO");
-        $robot1.removeClass('borderBlink');
-        $robot2.addClass('borderBlink');
+        $dialogue.text("");
+        $playerTurn.text("PLAYER TWO").css('animation', 'fadein 2s').css('animation', 'pulse 0.5s ease-in infinite');
+        $robot2.css('animation', 'pop 1s');
         $letterA.append("<p>Yoga is a great way to keep my joints healthy.</p>").on('click', ()=>{
             $success();
+            $robot2.css('animation', '');
             $letterA.off('click');
             $letterB.off('click');
             $letterC.off('click');
             heartPushP2();
             setTimeout(()=>{
-                // tally points
-                // end game
+                heartTally();
             }, 1000)
         });
         $letterB.append("<p>I can't stand a boring night in.</p>").on('click', ()=>{
             $malfunction();
+            $robot2.css('animation', '');
             $letterA.off('click');
             $letterB.off('click');
             $letterC.off('click');
             heartPopP2();
             setTimeout(()=>{
-                // tally points
-                // end game
+                heartTally();
             }, 1000)
         });
         $letterC.append("<p>Something tells me you're into heavy metal.</p>").on('click', ()=>{
             $malfunction();
+            $robot2.css('animation', '');
             $letterA.off('click');
             $letterB.off('click');
             $letterC.off('click');
             heartPopP2();
             setTimeout(()=>{
-                // tally points
-                // end game
+                heartTally();
             }, 1000)
         });
     }
@@ -1127,6 +1285,7 @@ $(()=>{
     //////////////////////////////////////////////////////////////////////////////////////////////////////
     //////////////////////////////////////////////////////////////////////////////////////////////////////
 
+    $choiceBox.children().hide();
     createPlayer1();
 
 });
